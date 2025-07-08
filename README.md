@@ -9,8 +9,7 @@ A customizable two-player chess game with a modern interface and strong foundati
 
 ## Demo
 
-- Board initialization
-
+- Board initialization\n
 ![image](https://github.com/user-attachments/assets/13eaf372-8506-46bf-ba85-e126f82c3a49)
 
 - Move calculation for all pieces 
