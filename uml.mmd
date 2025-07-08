@@ -1,0 +1,207 @@
+classDiagram
+    %%------------ Constants & Entry Point ------------%%
+    class Const {
+      +WIDTH: Integer
+      +HEIGHT: Integer
+      +ROWS: Integer
+      +COLS: Integer
+      +SQSIZE: Integer
+    }
+
+    class Main {
+      -screen: pygame.Surface
+      +mainLoop(): void
+    }
+    Main "1" o-- "1" Game : game
+
+    %%------------ Core Game Class ------------%%
+    class Game {
+      -variant: Variant
+      -mode: GameMode
+      -engine: Engine [0..1]
+      +start(): void
+      +reset(): void
+      +move(m: Move): void
+      +show_bg(): void
+      +show_pieces(): void
+      +show_moves(): void
+      +show_last_move(): void
+      +show_hover(): void
+      +set_hover(r: int, c: int): void
+      +select_piece(r: int, c: int): void
+      +unselect_piece(): void
+      +next_turn(): void
+      +change_theme(idx: int): void
+      +sound_effect(type: String): void
+    }
+    Game "1" o-- "1" Board    : board
+    Game "1" o-- "1" Dragger  : dragger
+    Game "1" o-- "1" Config   : config
+    Game "1" --> "1" Variant  
+    Game "1" --> "0..1" Engine  
+
+    %%------------ Variant Strategy ------------%%
+    class Variant {
+      <<interface>>
+      +setupBoard(b: Board): void
+      +isValidMove(m: Move, b: Board): bool
+      +applySpecialRules(m: Move, g: Game): void
+    }
+    class StandardVariant
+    class Chess960Variant
+    class ThreeCheckVariant {
+      -checkCounts: Map<String,int>
+    }
+    class AtomicVariant
+
+    Variant <|-- StandardVariant
+    Variant <|-- Chess960Variant
+    Variant <|-- ThreeCheckVariant
+    Variant <|-- AtomicVariant
+
+    %%------------ Engine Strategy ------------%%
+    class Engine {
+      <<interface>>
+      +getMove(b: Board): Move
+    }
+    class AI {
+      -engine: String
+      -depth: Integer
+      -color: String
+      -boards_explored: Integer
+      +eval(): float
+      +minimax(): Move
+      +heatmap(): void
+      +threads(): void
+      +book_move(): Move
+      +get_moves(): List<Move>
+      +getMove(b: Board): Move
+    }
+    Engine <|-- AI
+
+    %%------------ Opening Book & Search Tree ------------%%
+    class Book {
+      -applicableVariants: List<String>
+      +__create__(): void
+      +next_move(): Move
+    }
+    class Node {
+      -value: Integer
+      -weight: Float
+      -prob: Float
+      +add_child(n: Node): void
+      +add_children(ns: List<Node>): void
+      +calc_prob(): void
+      +get_child(): Node
+      +choose_child(): Node
+    }
+    AI --> Book
+    Book "1" o-- "1" Node   : head
+    Node "1" o-- "*" Node   : children
+
+    %%------------ Board, Squares & Moves ------------%%
+    class Board {
+      +_create(): void
+      +_add_pieces(): void
+      +move(m: Move): void
+      +check_promotion(): void
+      +valid_move(m: Move): bool
+      +calc_moves(s: Square): List<Move>
+    }
+    class Square {
+      -row: Integer
+      -col: Integer
+      -alphaCol: Char
+      +has_piece(): bool
+      +has_team_piece(color: String): bool
+      +has_rival_piece(color: String): bool
+      +is_empty(): bool
+      +is_empty_or_rival(color: String): bool
+    }
+    class Move {
+      -initial: Square
+      -final: Square
+      +apply(b: Board): void
+    }
+    Board "1" o-- "*" Square : squares
+    Square "1" <-- "0..1" Move: initial
+    Square "1" <-- "0..1" Move: final
+    Board --> Move            : calc_moves()
+
+    %%------------ Piece Hierarchy ------------%%
+    class Piece {
+      -name: String
+      -color: String
+      -value: Integer
+      -moved: Boolean
+      -texture: String
+      -texture_rect: pygame.Rect
+      +add_move(m: Move): void
+      +set_texture(path: String): void
+    }
+    class Pawn   { -dir: Integer }
+    class Knight
+    class Bishop
+    class Rook
+    class Queen
+    class King
+
+    Piece <|-- Pawn
+    Piece <|-- Knight
+    Piece <|-- Bishop
+    Piece <|-- Rook
+    Piece <|-- Queen
+    Piece <|-- King
+    Board "1" --> "*" Piece  : _add_pieces()
+
+    %%------------ Drag-and-Drop Support ------------%%
+    class Dragger {
+      -dragging: Boolean
+      -mouseX: Integer
+      -mouseY: Integer
+      -initial_row: Integer
+      -initial_col: Integer
+      +update_mouse(): void
+      +update_blit(): void
+      +save_initial(): void
+      +drag_piece(): void
+      +undrag_piece(): void
+    }
+
+    %%------------ Theming & Configuration ------------%%
+    class Config {
+      -idx: Integer
+      -font: pygame.font
+      +add_themes(): void
+      +change_theme(idx: Integer): void
+    }
+    class Theme {
+      +bg: Color
+      +trace: Color
+      +moves: Color
+      +move_sound: Sound
+      +capture_sound: Sound
+    }
+    class Color {
+      -light: String
+      -dark: String
+    }
+    class Sound {
+      -path: String
+      -sound: pygame.Sound
+      +play(): void
+    }
+
+    Config "1" o-- "*" Theme  : themes
+    Theme  "1" o-- "1" Color  : bg
+    Theme  "1" o-- "1" Color  : trace
+    Theme  "1" o-- "1" Color  : moves
+    Theme  "1" o-- "1" Sound  : move_sound
+    Theme  "1" o-- "1" Sound  : capture_sound
+
+    %%------------ Game Mode Enum ------------%%
+    class GameMode {
+      <<enumeration>>
+      PvP
+      PvE
+    }
