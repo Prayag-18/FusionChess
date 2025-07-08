@@ -12,6 +12,7 @@ A customizable two-player chess game with a modern interface and strong foundati
 
 ![image](https://github.com/user-attachments/assets/1101ddea-5a24-4589-8955-3b540ecb3274)
 
+![image](https://github.com/user-attachments/assets/88954eae-4954-4d30-b093-2ab329be7274)
 
 
 Stay tuned for updates and versioned releases!
