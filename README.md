@@ -27,4 +27,7 @@ A customizable two-player chess game with a modern interface and strong foundati
 - King can capture the Knight, since its not defended by any piece.
 ![image](https://github.com/user-attachments/assets/06312705-209d-4e9c-8228-696a25a08504)
 
+- Pawn cannot capture the Knight, since it is pinned to the King and King is in check, so either King has to move or Knight will be captured by the rook.
+![image](https://github.com/user-attachments/assets/1d79289c-4d7a-41e8-bfbe-0fea8f46639d)
+
 Stay tuned for updates and versioned releases!
