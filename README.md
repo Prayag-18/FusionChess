@@ -14,5 +14,9 @@ A customizable two-player chess game with a modern interface and strong foundati
 
 ![image](https://github.com/user-attachments/assets/88954eae-4954-4d30-b093-2ab329be7274)
 
+![image](https://github.com/user-attachments/assets/07696fc0-37a5-4edd-8d07-bc634a8a6e8e)
+
+King can't capture the Bishop, since it's defended by the Knight.
+![image](https://github.com/user-attachments/assets/66ded965-c805-4e2e-a816-55ef61d3715c)
 
 Stay tuned for updates and versioned releases!
