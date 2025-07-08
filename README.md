@@ -24,4 +24,7 @@ A customizable two-player chess game with a modern interface and strong foundati
 - King is in Check (no other piece cannnot defend the King) and can't capture the Bishop, since it's defended by the Knight.
 ![image](https://github.com/user-attachments/assets/66ded965-c805-4e2e-a816-55ef61d3715c)
 
+- King can capture the Knight, since its not defended by any piece.
+![image](https://github.com/user-attachments/assets/06312705-209d-4e9c-8228-696a25a08504)
+
 Stay tuned for updates and versioned releases!
