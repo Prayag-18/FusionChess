@@ -12,11 +12,13 @@ A customizable two-player chess game with a modern interface and strong foundati
 - Board initialization
 ![image](https://github.com/user-attachments/assets/b5f529a5-15e8-4c4f-9342-c09e5e607b6c)
 
+- Move calculation for all pieces 
 ![image](https://github.com/user-attachments/assets/1101ddea-5a24-4589-8955-3b540ecb3274)
 
+- King can castle on both King's and Queen's side.
 ![image](https://github.com/user-attachments/assets/88954eae-4954-4d30-b093-2ab329be7274)
 
-
+- King has castled on King's side.
 ![image](https://github.com/user-attachments/assets/07696fc0-37a5-4edd-8d07-bc634a8a6e8e)
 
 - King is in Check (no other piece cannnot defend the King) and can't capture the Bishop, since it's defended by the Knight.
